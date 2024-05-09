@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Information</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    input[type="text"], select {
+        width: 100%;
+        padding: 8px;
+        margin: 5px 0;
+        box-sizing: border-box;
+    }
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #4CAF50;
+        color: white;
+    }
+</style>
+</head>
+<body>
+
+<h2>Enter Student Information</h2>
+
+<label for="numStudents">Number of Students:</label>
+<input type="number" id="numStudents" min="1" required>
+<button onclick="addStudents()">Submit</button>
+
+<div id="studentInputs" style="display:none;">
+    <h3>Enter Student Details:</h3>
+    <div id="inputFields"></div>
+    <button onclick="generateTable()">Generate Table</button>
+</div>
+
+<div id="studentTable" style="display:none;">
+    <h2>Student Information Table</h2>
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Roll Number</th>
+                <th>Date of Birth</th>
+                <th>Branch</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+</div>
+
+<script>
+    function addStudents() {
+        var numStudents = document.getElementById("numStudents").value;
+        var inputFieldsDiv = document.getElementById("inputFields");
+        inputFieldsDiv.innerHTML = "";
+
+        for (var i = 1; i <= numStudents; i++) {
+            var div = document.createElement("div");
+            div.innerHTML = `
+                <label for="name${i}">Name:</label>
+                <input type="text" id="name${i}" required>
+                <label for="roll${i}">Roll Number:</label>
+                <input type="text" id="roll${i}" required>
+                <label for="dob${i}">Date of Birth:</label>
+                <input type="text" id="dob${i}" required>
+                <label for="branch${i}">Branch:</label>
+                <input type="text" id="branch${i}" required>
+            `;
+            inputFieldsDiv.appendChild(div);
+        }
+
+        document.getElementById("studentInputs").style.display = "block";
+    }
+
+    function generateTable() {
+        var numStudents = document.getElementById("numStudents").value;
+        var tableBody = document.getElementById("tableBody");
+        tableBody.innerHTML = "";
+
+        for (var i = 1; i <= numStudents; i++) {
+            var name = document.getElementById("name" + i).value;
+            var roll = document.getElementById("roll" + i).value;
+            var dob = document.getElementById("dob" + i).value;
+            var branch = document.getElementById("branch" + i).value;
+
+            var row = tableBody.insertRow();
+            row.insertCell(0).textContent = name;
+            row.insertCell(1).textContent = roll;
+            row.insertCell(2).textContent = dob;
+            row.insertCell(3).textContent = branch;
+        }
+
+        document.getElementById("studentTable").style.display = "block";
+    }
+</script>
+
+</body>
+</html>
